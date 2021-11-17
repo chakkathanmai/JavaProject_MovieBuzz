@@ -13,11 +13,16 @@ import com.moviebuzz.model.Movie;
  *
  */
 public interface IMovieRepository {
-	
+
 	void addMovie(Movie movie);
-	void deleteMovie(Movie movie) throws MovieNotFoundException;
+
+	void deleteMovie(Movie movie) throws MovieNotFoundException;// balance
+
 	List<Movie> getMovieByLanguage(String language) throws MovieNotFoundException;
+
 	List<Movie> getMovieByGenre(String genre) throws MovieNotFoundException;
+
 	List<Movie> getMovieByYear(int releasedYear) throws MovieNotFoundException;
+
 	List<Movie> getAllMovies();
 }

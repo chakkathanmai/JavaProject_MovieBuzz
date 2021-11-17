@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class ModelDao {
 
 	static Connection connection;
-	private static final String URL = "jdbc:mysql://localhost:3306/moviereview";
+	private static final String URL = "jdbc:mysql://localhost:3306/moviebuzz";
 	public static final String USERNAME = "root";
 	public static final String PASSWORD = "root";
 

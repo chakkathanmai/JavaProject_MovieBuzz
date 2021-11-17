@@ -3,6 +3,13 @@
  */
 package com.moviebuzz.repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.moviebuzz.exception.UserNotFoundException;
 import com.moviebuzz.model.User;
 
@@ -15,19 +22,95 @@ public class UserRepositroyImpl implements IUserRepository {
 	@Override
 	public void registerUser(User user) {
 		// TODO Auto-generated method stub
-		
+		PreparedStatement statement = null;
+		Connection connection = ModelDao.openConnection();
+		try {
+			statement = connection.prepareStatement("insert into user_details values(?)");
+			statement.setString(1, user.getUniqueId());
+			statement.execute();
+			System.out.println();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+				if (statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+
+			}
+		}
 	}
 
 	@Override
-	public void loginUser(User user) throws UserNotFoundException {
+	public List<User> loginUser(User user) throws UserNotFoundException {
+
 		// TODO Auto-generated method stub
-		
+
+		PreparedStatement statement = null;
+		Connection connection = ModelDao.openConnection();
+		String query = "select uniqueId from user_details where uniqueId= ?";
+		List<User> userList = new ArrayList<>();
+		try {
+			statement = connection.prepareStatement(query);
+			statement.setString(1, user.getUniqueId());
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				String uniqueId = result.getString("uniqueId");
+				User userFound = new User(uniqueId);
+				userList.add(userFound);
+			}
+			if (userList.isEmpty()) {
+				throw new UserNotFoundException("User Not Found");
+			}
+
+		} catch (SQLException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+				if (statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+
+			}
+		}
+		return userList;
+
 	}
 
 	@Override
 	public void deleteUser(User user) throws UserNotFoundException {
 		// TODO Auto-generated method stub
-		
+
+		PreparedStatement statement = null;
+		Connection connection = ModelDao.openConnection();
+		try {
+			statement = connection.prepareStatement("delete from user_details where uniqueId=?");
+			statement.setString(1, user.getUniqueId());
+			statement.execute();
+			System.out.println();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+				if (statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+
+			}
+		}
+
 	}
 
 }

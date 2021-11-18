@@ -17,5 +17,5 @@ public class Queries {
 	public static final String INSERTUSERDETAILSQUERY = "insert into user_details values(?)";
 	public static final String LOGINQUERY = "select uniqueId from user_details where uniqueId= ?";
 	public static final String DELETEMOVIEQUERY = "delete from movie where movieId=?";
-	public static final String GETBYOSQUERY = "select * from mobile where os = ?";
+	
 }

@@ -27,6 +27,7 @@ public class AdminService implements IAdminService {
 	@Override
 	public void deleteMovie(Movie movie) throws MovieNotFoundException {
 		// TODO Auto-generated method stub
+		movieRepository.deleteMovie(movie);
 	}
 
 	@Override

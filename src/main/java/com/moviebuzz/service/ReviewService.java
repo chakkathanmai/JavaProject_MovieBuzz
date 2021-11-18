@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.moviebuzz.model.Review;
 import com.moviebuzz.repository.IReviewRepository;
-import com.moviebuzz.repository.ReviewRepository;
+import com.moviebuzz.repository.ReviewRepositoryImpl;
 
 public class ReviewService implements IReviewService{
 	
-	IReviewRepository reviewRepository = new ReviewRepository();
+	IReviewRepository reviewRepository = new ReviewRepositoryImpl();
 	@Override
 	public void addReview(Review review) {
 		// TODO Auto-generated method stub

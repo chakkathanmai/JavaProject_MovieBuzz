@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.moviebuzz.model.Review;
 
-public class ReviewRepository implements IReviewRepository {
+public class ReviewRepositoryImpl implements IReviewRepository {
 
 	@Override
 	public void addReview(Review review) {

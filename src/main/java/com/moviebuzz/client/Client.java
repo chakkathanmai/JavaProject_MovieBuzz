@@ -120,7 +120,7 @@ public class Client {
 							System.out.println(adminService.getAllMovies());
 							System.out.println("Select title from above list");
 							String title=scan.next(); 
-							
+						
 						}
 
 					} catch (UserNotFoundException e) {
@@ -178,13 +178,24 @@ public class Client {
 						System.out.println("Movie successfully added");
 						break;
 					case 2:
+						Movie movieToDelete = new Movie();
+						System.out.print("Enter movie ID to be deleted : ");
+						int movieIdToDelete = scan.nextInt();
+						movieToDelete.setMovieId(movieIdToDelete);
+						try {
+							adminService.deleteMovie(movieToDelete);
+							System.out.println("Delete Successful.");
+						} catch (MovieNotFoundException e) {
+							// TODO Auto-generated catch block
+							System.out.println("Movie ID not found");
+						}
+						
 						break;
 					case 3:
 						// delete if any bad words;
 						User admin = new User();
 						break;
 					}
-
 				} else {
 					System.out.println("went wrong.. Enter correct admin pin");
 				}

@@ -27,7 +27,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		PreparedStatement statement = null;
 
 		try {
-			String query = "insert into movie values(?,?,?,?,?,?,?);";
+			String query = Queries.ADDMOVIEQUERY;
 			statement = connection.prepareStatement(query);
 			statement.setString(1, movie.getMovieTitle());
 			statement.setInt(2, movie.getReleasedYear());
@@ -45,6 +45,28 @@ public class MovieRepositoryImpl implements IMovieRepository {
 	@Override
 	public void deleteMovie(Movie movie) throws MovieNotFoundException {
 		// TODO Auto-generated method stub
+		PreparedStatement statement = null;
+		Connection connection = ModelDao.openConnection();
+		try {
+			statement = connection.prepareStatement(Queries.DELETEMOVIEQUERY);
+			statement.setInt(1, movie.getMovieId());
+			statement.execute();
+			System.out.println();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+				if (statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+
+			}
+		}
+		
 
 	}
 
@@ -56,7 +78,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		List<Movie> moviesList = new ArrayList<>();
 
 		try {
-			String query = "select movieTitle,language,releasedYear,genre from movie where language= ?";
+			String query = Queries.GETMOVIEBYLANGUAGEQUERY;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, language);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -96,7 +118,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		List<Movie> moviesList = new ArrayList<>();
 
 		try {
-			String query = "select movieTitle,language,releasedYear,genre from movie where genre= ?";
+			String query = Queries.GETMOVIEBYGENREQUERY;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, genre);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -134,7 +156,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		List<Movie> moviesList = new ArrayList<>();
 
 		try {
-			String query = "select movieTitle,language,releasedYear,genre from movie where releasedYear= ?";
+			String query = Queries.GETMOVIEBYYEARQUERY;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, releasedYear);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -173,7 +195,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		PreparedStatement prepareStatement = null;
 		List<Movie> moviesList = new ArrayList<Movie>();
 		try {
-			String query = "select movieTitle,releasedYear,genre,language from movie";
+			String query = Queries.GETALLMOVIESQUERY;
 			prepareStatement = connection.prepareStatement(query);
 			ResultSet resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {

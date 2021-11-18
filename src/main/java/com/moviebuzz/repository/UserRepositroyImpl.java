@@ -25,7 +25,7 @@ public class UserRepositroyImpl implements IUserRepository {
 		PreparedStatement statement = null;
 		Connection connection = ModelDao.openConnection();
 		try {
-			statement = connection.prepareStatement("insert into user_details values(?)");
+			statement = connection.prepareStatement(Queries.INSERTUSERDETAILSQUERY);
 			statement.setString(1, user.getUniqueId());
 			statement.execute();
 			System.out.println();
@@ -52,7 +52,7 @@ public class UserRepositroyImpl implements IUserRepository {
 
 		PreparedStatement statement = null;
 		Connection connection = ModelDao.openConnection();
-		String query = "select uniqueId from user_details where uniqueId= ?";
+		String query = Queries.LOGINQUERY;
 		List<User> userList = new ArrayList<>();
 		try {
 			statement = connection.prepareStatement(query);
@@ -88,11 +88,12 @@ public class UserRepositroyImpl implements IUserRepository {
 	@Override
 	public void deleteUser(User user) throws UserNotFoundException {
 		// TODO Auto-generated method stub
-
+		
+		//inner join and delete
 		PreparedStatement statement = null;
 		Connection connection = ModelDao.openConnection();
 		try {
-			statement = connection.prepareStatement("delete from user_details where uniqueId=?");
+			statement = connection.prepareStatement("delete from user_details where uniqueId=? and review like '%fuck%' ");
 			statement.setString(1, user.getUniqueId());
 			statement.execute();
 			System.out.println();

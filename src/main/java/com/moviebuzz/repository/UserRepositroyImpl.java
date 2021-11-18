@@ -93,13 +93,13 @@ public class UserRepositroyImpl implements IUserRepository {
 		PreparedStatement statement = null;
 		Connection connection = ModelDao.openConnection();
 		try {
-			statement = connection.prepareStatement("delete from user_details where uniqueId=? and review like '%fuck%' ");
-			statement.setString(1, user.getUniqueId());
+			statement = connection.prepareStatement("delete from user_details where uniqueId=(select uniqueId from review where review like '%kill%' or positive like '%kill%' or negative like '%kill%'  ) ");
+			
 			statement.execute();
 			System.out.println();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} finally {
 			try {
 				if (connection != null)

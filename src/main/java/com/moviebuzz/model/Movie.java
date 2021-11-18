@@ -9,13 +9,13 @@ package com.moviebuzz.model;
  */
 public class Movie {
 
-	String movieTitle;
-	String genre;
-	String language;
-	int releasedYear;
-	int movieId;
-	double budget;
-	double collection;
+	private String movieTitle;
+	private String genre;
+	private String language;
+	private int releasedYear;
+	private int movieId;
+	private double budget;
+	private double collection;
 
 	public Movie() {
 		super();

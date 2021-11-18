@@ -9,7 +9,7 @@ package com.moviebuzz.model;
  */
 public class User {
 
-	String uniqueId;
+	private String uniqueId;
 
 	public User() {
 		super();

@@ -50,11 +50,14 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		try {
 			statement = connection.prepareStatement(Queries.DELETEMOVIEQUERY);
 			statement.setInt(1, movie.getMovieId());
-			statement.execute();
+			int count = statement.executeUpdate();
+			if(count ==0) {
+				throw new MovieNotFoundException("Not found");
+			}
 			System.out.println();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} finally {
 			try {
 				if (connection != null)

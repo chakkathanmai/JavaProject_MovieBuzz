@@ -79,132 +79,134 @@ public class Client {
 							userService.loginUser(user);
 							System.out.println();
 							System.out.println("Welcome...");
-
+							adminService.getAllMovies().forEach(System.out::println);
 							System.out.println();
-							System.out.println("1. Movies \n2.select movie by year\n3.select movie by genre\n"
-									+ "4.select movie by language\n5.Add review\n6.Know your review by movie\n7.Delete review\n8.Know your review by language\n9.Update review");
-							int login = scan.nextInt();
+							System.out.println("1.select movie by year\n2.select movie by genre\n"
+									+ "3.select movie by language\n4.Add review\n5.Know your review by movie\n6.Delete review\n7.Know your review by language\n8.Update review");
+							System.out.println("0.Exit");
+							int login;
+							do {
+								login = scan.nextInt();
 
-							switch (login) {
+								switch (login) {
 
-							case 1:
-								adminService.getAllMovies().forEach(System.out::println);
-								break;
-							case 2:
-								System.out.println("Enter year : ");
-								int year = scan.nextInt();
-								try {
-									System.out.println(adminService.getMovieByYear(year));
-								} catch (MovieNotFoundException e) {
-									// TODO Auto-generated catch block
-									System.out.println(e.getMessage());
+								case 1:
+									System.out.println("Enter year : ");
+									int year = scan.nextInt();
+									try {
+										System.out.println(adminService.getMovieByYear(year));
+									} catch (MovieNotFoundException e) {
+										// TODO Auto-generated catch block
+										System.out.println(e.getMessage());
+									}
+									break;
+								case 2:
+									System.out.println("Enter genre : ");
+									String genre = scan.next();
+									try {
+										System.out.println(adminService.getMovieByGenre(genre));
+									} catch (MovieNotFoundException e) {
+										// TODO Auto-generated catch block
+										System.out.println(e.getMessage());
+									}
+									break;
+								case 3:
+									System.out.println("Enter language: ");
+									String language = scan.next();
+									try {
+										System.out.println(adminService.getMovieByLanguage(language));
+									} catch (MovieNotFoundException e) {
+										// TODO Auto-generated catch block
+										System.out.println(e.getMessage());
+									}
+									break;
+								case 4:
+									Review review = new Review();
+									System.out.println("Add review: ");
+									System.out.println("Enter movie Id : ");
+									int movieId = scan.nextInt();
+									review.setMovieId(movieId);
+									scan.next();
+									System.out.println("Enter review: ");
+									String userReview = scan.nextLine();
+									review.setReview(userReview);
+									System.out.println("Enter positives: ");
+									String positives = scan.next();
+									review.setPositives(positives);
+									System.out.println("Enter negatives: ");
+									String negatives = scan.next();
+									review.setNegatives(negatives);
+									System.out.println("Enter overall rating: ");
+									int overallRating = scan.nextInt();
+									review.setOverallRating(overallRating);
+									System.out.println("Enter unique Id: ");
+									String uniqueId = scan.next();
+									review.setUniqueId(uniqueId);
+									reviewService.addReview(review);
+									System.out.println("Your review successfully added");
+									break;
+								case 5:
+
+									System.out.println("Enter movie name:");
+									String movieName = scan.next();
+									System.out.println("Enter your unique ID: ");
+									String userUniqueId = scan.next();
+									try {
+										System.out
+												.println(reviewService.getUserReviewForMovie(movieName, userUniqueId));
+									} catch (MovieNotFoundException e) {
+										// TODO Auto-generated catch block
+										System.out.println(e.getMessage());
+									}
+									break;
+								case 6:
+									System.out.println("Enter movie name:");
+									String movieTitle = scan.next();
+									System.out.println("Enter your unique ID: ");
+									String uniqueUserId = scan.next();
+									reviewService.deleteReview(uniqueUserId, movieTitle);
+									System.out.println("Selected review deleted");
+									break;
+								case 7:
+									System.out.println("Enter movie name:");
+									String movieTag = scan.next();
+									System.out.println("Enter language: ");
+									String languageTag = scan.next();
+									try {
+										System.out.println(reviewService.getReviewForMovie(movieTag, languageTag));
+									} catch (MovieNotFoundException e) {
+										// TODO Auto-generated catch block
+										System.out.println(e.getMessage());
+									}
+									break;
+								case 8:
+									Review updateReview = new Review();
+									System.out.println("Enter your uniqueId again:");
+									String uniqueCode = scan.next();
+									System.out.println("Enter movie Id to update:");
+									int movieCode = scan.nextInt();
+									updateReview.setUniqueId(uniqueCode);
+									updateReview.setMovieId(movieCode);
+
+									System.out.println("Update review: ");
+									String reviewUpdation = scan.next();
+									updateReview.setReview(reviewUpdation);
+									System.out.println("Update positives: ");
+									String positiveUpdation = scan.next();
+									updateReview.setPositives(positiveUpdation);
+									System.out.println("Update negatives: ");
+									String negativeUpdation = scan.next();
+									updateReview.setNegatives(negativeUpdation);
+
+									System.out.println("Update overall rating: ");
+									int overallRatingUpdate = scan.nextInt();
+									updateReview.setOverallRating(overallRatingUpdate);
+
+									reviewService.updateReview(updateReview);
+									System.out.println("Review updated successfully");
+									break;
 								}
-								break;
-							case 3:
-								System.out.println("Enter genre : ");
-								String genre = scan.next();
-								try {
-									System.out.println(adminService.getMovieByGenre(genre));
-								} catch (MovieNotFoundException e) {
-									// TODO Auto-generated catch block
-									System.out.println(e.getMessage());
-								}
-								break;
-							case 4:
-								System.out.println("Enter language: ");
-								String language = scan.next();
-								try {
-									System.out.println(adminService.getMovieByLanguage(language));
-								} catch (MovieNotFoundException e) {
-									// TODO Auto-generated catch block
-									System.out.println(e.getMessage());
-								}
-								break;
-							case 5:
-								Review review = new Review();
-								System.out.println("Add review: ");
-								System.out.println("Enter movie Id : ");
-								int movieId = scan.nextInt();
-								review.setMovieId(movieId);
-								System.out.println("Enter review: ");
-								String userReview = scan.next();
-								review.setReview(userReview);
-								System.out.println("Enter positives: ");
-								String positives = scan.next();
-								review.setPositives(positives);
-								System.out.println("Enter negatives: ");
-								String negatives = scan.next();
-								review.setNegatives(negatives);
-								System.out.println("Enter overall rating: ");
-								int overallRating = scan.nextInt();
-								review.setOverallRating(overallRating);
-								System.out.println("Enter unique Id: ");
-								String uniqueId = scan.next();
-								review.setUniqueId(uniqueId);
-								reviewService.addReview(review);
-								System.out.println("Your review successfully added");
-								break;
-							case 6:
-
-								System.out.println("Enter movie name:");
-								String movieName = scan.next();
-								System.out.println("Enter your unique ID: ");
-								String userUniqueId = scan.next();
-								try {
-									System.out.println(reviewService.getUserReviewForMovie(movieName, userUniqueId));
-								} catch (MovieNotFoundException e) {
-									// TODO Auto-generated catch block
-									System.out.println(e.getMessage());
-								}
-								break;
-							case 7:
-								System.out.println("Enter movie name:");
-								String movieTitle = scan.next();
-								System.out.println("Enter your unique ID: ");
-								String uniqueUserId = scan.next();
-								reviewService.deleteReview(uniqueUserId, movieTitle);
-								System.out.println("Selected review deleted");
-								break;
-							case 8:
-								System.out.println("Enter movie name:");
-								String movieTag = scan.next();
-								System.out.println("Enter language: ");
-								String languageTag = scan.next();
-								try {
-									System.out.println(reviewService.getReviewForMovie(movieTag, languageTag));
-								} catch (MovieNotFoundException e) {
-									// TODO Auto-generated catch block
-									System.out.println(e.getMessage());
-								}
-								break;
-							case 9:
-								Review updateReview = new Review();
-								System.out.println("Enter your uniqueId again:");
-								String uniqueCode = scan.next();
-								System.out.println("Enter movie Id to update:");
-								int movieCode = scan.nextInt();
-								updateReview.setUniqueId(uniqueCode);
-								updateReview.setMovieId(movieCode);
-
-								System.out.println("Update review: ");
-								String reviewUpdation = scan.next();
-								updateReview.setReview(reviewUpdation);
-								System.out.println("Update positives: ");
-								String positiveUpdation = scan.next();
-								updateReview.setPositives(positiveUpdation);
-								System.out.println("Update negatives: ");
-								String negativeUpdation = scan.next();
-								updateReview.setNegatives(negativeUpdation);
-
-								System.out.println("Update overall rating: ");
-								int overallRatingUpdate = scan.nextInt();
-								updateReview.setOverallRating(overallRatingUpdate);
-
-								reviewService.updateReview(updateReview);
-								System.out.println("Review updated successfully");
-								break;
-							}
-
+							} while (login != 0);
 						} catch (UserNotFoundException e) {
 							// TODO Auto-generated catch block
 							System.out.println(e.getMessage());
@@ -225,69 +227,81 @@ public class Client {
 				case 2:
 					System.out.println();
 					System.out.print("Enter uniqueId : ");
-					String adminEntry = scan.next();
+					String adminEntry;
+
+					adminEntry = scan.next();
+					int adminChoice;
 					if (adminEntry.equals("sriThanmai")) {
 						// add movie,delete movie,delete user;
-						System.out.println(
-								"Do the necessary: 1 - add upcoming movies 2 - " + "delete movie 3 - delete User ");
-						int adminChoice = scan.nextInt();
-						switch (adminChoice) {
-						case 1:
-							Movie movie = new Movie();
-							System.out.println("Adding movie..");
-							System.out.println("Enter movie title: ");
-							String movieTitle = scan.next();
-							movie.setMovieTitle(movieTitle);
-							System.out.println("Enter released year: ");
-							int movieYear = scan.nextInt();
-							movie.setReleasedYear(movieYear);
-							System.out.println("Enter movie genre: ");
-							String genre = scan.next();
-							movie.setGenre(genre);
-							System.out.println("Enter movie budget: ");
-							double budget = scan.nextDouble();
-							movie.setBudget(budget);
-							System.out.println("Enter movie collection: ");
-							double collection = scan.nextDouble();
-							movie.setCollection(collection);
-							System.out.println("Enter movie language: ");
-							String language = scan.next();
-							movie.setLanguage(language);
-							System.out.println("Enter movie Id: ");
-							int movieId = scan.nextInt();
-							movie.setMovieId(movieId);
-							adminService.addMovie(movie);
-							System.out.println("Movie successfully added");
-							break;
-						case 2:
-							Movie movieToDelete = new Movie();
-							System.out.println("Enter movie Id you want to delete: ");
-							int movieIdToDelete = scan.nextInt();
-							movieToDelete.setMovieId(movieIdToDelete);
-							try {
-								adminService.deleteMovie(movieToDelete);
-								System.out.println("Deleted successfully");
-							} catch (MovieNotFoundException e) {
-								// TODO Auto-generated catch block
-								System.out.println(e.getMessage());
-							}
-							break;
-						case 3:
-							// delete if any bad words;
-							User user = new User();
-							try {
-								userService.deleteUser(user);
 
-							} catch (UserNotFoundException e) {
-								// TODO Auto-generated catch block
-								System.out.println(e.getMessage());
-							}
-							break;
-						}
+						do {
+							System.out.println(
+									"Do the necessary: 1 - add upcoming movies 2 - " + "delete movie 3 - delete User ");
+							System.out.println("0.Exit");
 
-					} else {
+							adminChoice = scan.nextInt();
+							switch (adminChoice) {
+							case 1:
+								Movie movie = new Movie();
+								System.out.println("Adding movie..");
+								System.out.println("Enter movie title: ");
+								String movieTitle = scan.next();
+								movie.setMovieTitle(movieTitle);
+								System.out.println("Enter released year: ");
+								int movieYear = scan.nextInt();
+								movie.setReleasedYear(movieYear);
+								System.out.println("Enter movie genre: ");
+								String genre = scan.next();
+								movie.setGenre(genre);
+								System.out.println("Enter movie budget: ");
+								double budget = scan.nextDouble();
+								movie.setBudget(budget);
+								System.out.println("Enter movie collection: ");
+								double collection = scan.nextDouble();
+								movie.setCollection(collection);
+								System.out.println("Enter movie language: ");
+								String language = scan.next();
+								movie.setLanguage(language);
+								System.out.println("Enter movie Id: ");
+								int movieId = scan.nextInt();
+								movie.setMovieId(movieId);
+								adminService.addMovie(movie);
+								System.out.println("Movie successfully added");
+								break;
+							case 2:
+								Movie movieToDelete = new Movie();
+								System.out.println("Enter movie Id you want to delete: ");
+								int movieIdToDelete = scan.nextInt();
+								movieToDelete.setMovieId(movieIdToDelete);
+								try {
+									adminService.deleteMovie(movieToDelete);
+									System.out.println("Deleted successfully");
+								} catch (MovieNotFoundException e) {
+									// TODO Auto-generated catch block
+									System.out.println(e.getMessage());
+								}
+								break;
+							case 3:
+								// delete if any bad words;
+								User user = new User();
+								try {
+									userService.deleteUser(user);
+
+								} catch (UserNotFoundException e) {
+									// TODO Auto-generated catch block
+									System.out.println(e.getMessage());
+								}
+								break;
+
+							}
+
+						} while (adminChoice != 0);
+					}
+
+					else {
 						System.out.println("went wrong.. Enter correct admin pin");
 					}
+
 					break;
 				case 3:
 					System.out.println("ThankYou..");
@@ -296,7 +310,8 @@ public class Client {
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Input--error");
+			
+			System.out.println("Sorry..Input Error");
 		}
 		scan.close();
 

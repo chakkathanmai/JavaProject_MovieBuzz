@@ -14,15 +14,40 @@ import com.moviebuzz.model.Review;
  *
  */
 public interface IReviewRepository {
-
+/**
+ * 
+ * @param review
+ */
 	void addReview(Review review);
+	/**
+	 * 
+	 * @param review
+	 * @throws UserNotFoundException
+	 */
 
 	void updateReview(Review review) throws UserNotFoundException;
-
+/**
+ * 
+ * @param movieName
+ * @param uniqueId
+ * @return
+ * @throws MovieNotFoundException
+ */
 	List<Review> getUserReviewForMovie(String movieName, String uniqueId) throws MovieNotFoundException;
-
+/**
+ * 
+ * @param movieName
+ * @param language
+ * @return
+ * @throws MovieNotFoundException
+ */
 	List<Review> getReviewForMovie(String movieName, String language) throws MovieNotFoundException;
-
+/**
+ * 
+ * @param uniqueId
+ * @param movieName
+ * @throws Exception
+ */
 	void deleteReview(String uniqueId, String movieName) throws Exception;
 
 }

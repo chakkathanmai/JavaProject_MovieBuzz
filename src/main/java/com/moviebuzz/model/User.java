@@ -21,10 +21,18 @@ public class User {
 		this.uniqueId = uniqueId;
 	}
 
+	/**
+	 * 
+	 * @return uniqueId
+	 */
 	public String getUniqueId() {
 		return uniqueId;
 	}
 
+	/**
+	 * 
+	 * @param uniqueId the uniqueId to set
+	 */
 	public void setUniqueId(String uniqueId) {
 		this.uniqueId = uniqueId;
 	}

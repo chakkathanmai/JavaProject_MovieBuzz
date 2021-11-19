@@ -20,6 +20,10 @@ import com.moviebuzz.model.Movie;
 public class MovieRepositoryImpl implements IMovieRepository {
 	Connection connection;
 	
+	/**
+	 * 
+	 */
+	
 	@Override
 	public void addMovie(Movie movie) {
 		// TODO Auto-generated method stub
@@ -41,6 +45,10 @@ public class MovieRepositoryImpl implements IMovieRepository {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	/**
+	 * 
+	 */
 
 	@Override
 	public void deleteMovie(Movie movie) throws MovieNotFoundException {
@@ -72,6 +80,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		
 
 	}
+	
 
 	@Override
 	public List<Movie> getMovieByLanguage(String language) throws MovieNotFoundException {
@@ -112,7 +121,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		// TODO Auto-generated method stub
 		return moviesList;
 	}
-
+	
 	@Override
 	public List<Movie> getMovieByGenre(String genre) throws MovieNotFoundException {
 		// TODO Auto-generated method stub
@@ -209,6 +218,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 				movie.setGenre(resultSet.getString("genre"));
 				
 				movie.setLanguage(resultSet.getString("language"));
+				movie.setMovieId(resultSet.getInt("movieId"));
 				moviesList.add(movie);
 			}
 		} catch (SQLException e) {

@@ -88,13 +88,13 @@ public class UserRepositroyImpl implements IUserRepository {
 	@Override
 	public void deleteUser(User user) throws UserNotFoundException {
 		// TODO Auto-generated method stub
-		
-		//inner join and delete
+
+		// inner join and delete
 		PreparedStatement statement = null;
 		Connection connection = ModelDao.openConnection();
 		try {
-			statement = connection.prepareStatement("delete from user_details where uniqueId=(select uniqueId from review where review like '%kill%' or positive like '%kill%' or negative like '%kill%'  ) ");
-			
+			statement = connection.prepareStatement(Queries.DELETEUSERQUERY);
+			// statement.setString(1, "%"+ );
 			statement.execute();
 			System.out.println();
 		} catch (SQLException e) {
@@ -112,6 +112,29 @@ public class UserRepositroyImpl implements IUserRepository {
 			}
 		}
 
+	}
+
+	public void deleteReviewByUser(User user) throws UserNotFoundException {
+		PreparedStatement statement = null;
+		Connection connection = ModelDao.openConnection();
+		try {
+			statement = connection.prepareStatement(Queries.DELETEREVIEWBYADMINQUERY);
+			statement.execute();
+			System.out.println();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+				if (statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+
+			}
+		}
 	}
 
 }

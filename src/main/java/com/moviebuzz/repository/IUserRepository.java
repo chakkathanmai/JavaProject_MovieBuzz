@@ -34,5 +34,12 @@ public interface IUserRepository {
 	 * @throws UserNotFoundException
 	 */
 	void deleteUser(User user) throws UserNotFoundException;
-
+	
+	/**
+	 * 
+	 * @param user
+	 * @throws UserNotFoundException
+	 */
+	public void deleteReviewByUser(User user) throws UserNotFoundException;
+	
 }

@@ -13,11 +13,29 @@ import com.moviebuzz.model.User;
  *
  */
 public interface IUserService {
-
+	/**
+	 * 
+	 * @param user
+	 */
 	void registerUser(User user);
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws UserNotFoundException
+	 */
 
 	public List<User> loginUser(User user) throws UserNotFoundException;
-
+	/**
+	 * 
+	 * @param user
+	 * @throws UserNotFoundException
+	 */
 	void deleteUser(User user) throws UserNotFoundException;
-
+	/**
+	 * 
+	 * @param user
+	 * @throws UserNotFoundException
+	 */
+	public void deleteReviewByUser(User user) throws UserNotFoundException;
 }

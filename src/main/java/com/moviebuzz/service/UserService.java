@@ -36,4 +36,10 @@ public class UserService implements IUserService {
 		userRepository.deleteUser(user);
 	}
 
+	@Override
+	public void deleteReviewByUser(User user) throws UserNotFoundException {
+		// TODO Auto-generated method stub
+		userRepository.deleteReviewByUser(user);
+	}
+
 }

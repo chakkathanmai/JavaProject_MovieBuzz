@@ -19,11 +19,11 @@ import com.moviebuzz.model.Movie;
  */
 public class MovieRepositoryImpl implements IMovieRepository {
 	Connection connection;
-	
+
 	/**
 	 * 
 	 */
-	
+
 	@Override
 	public void addMovie(Movie movie) {
 		// TODO Auto-generated method stub
@@ -38,14 +38,13 @@ public class MovieRepositoryImpl implements IMovieRepository {
 			statement.setString(3, movie.getGenre());
 			statement.setDouble(4, movie.getBudget());
 			statement.setDouble(5, movie.getCollection());
-			statement.setString(6,movie.getLanguage());
-			statement.setInt(7, movie.getMovieId());
+			statement.setString(6, movie.getLanguage());
 			statement.execute();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -59,7 +58,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 			statement = connection.prepareStatement(Queries.DELETEMOVIEQUERY);
 			statement.setInt(1, movie.getMovieId());
 			int count = statement.executeUpdate();
-			if(count ==0) {
+			if (count == 0) {
 				throw new MovieNotFoundException("Not found");
 			}
 			System.out.println();
@@ -77,10 +76,8 @@ public class MovieRepositoryImpl implements IMovieRepository {
 
 			}
 		}
-		
 
 	}
-	
 
 	@Override
 	public List<Movie> getMovieByLanguage(String language) throws MovieNotFoundException {
@@ -93,16 +90,17 @@ public class MovieRepositoryImpl implements IMovieRepository {
 			String query = Queries.GETMOVIEBYLANGUAGEQUERY;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, language);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
 				Movie movie = new Movie();
-				movie.setMovieTitle(rs.getString("movieTitle"));
-				movie.setReleasedYear(rs.getInt("releasedYear"));
-				movie.setGenre(rs.getString("genre"));
-				movie.setLanguage(rs.getString("language"));
+				movie.setMovieTitle(resultSet.getString("movieTitle"));
+				movie.setReleasedYear(resultSet.getInt("releasedYear"));
+				movie.setGenre(resultSet.getString("genre"));
+				movie.setLanguage(resultSet.getString("language"));
+				movie.setMovieId(resultSet.getInt("movieId"));
 				moviesList.add(movie);
 			}
-			if(moviesList.isEmpty()) {
+			if (moviesList.isEmpty()) {
 				throw new MovieNotFoundException("Language not available");
 			}
 		} catch (SQLException e) {
@@ -117,11 +115,11 @@ public class MovieRepositoryImpl implements IMovieRepository {
 				System.out.println(e.getMessage());
 			}
 		}
-		
+
 		// TODO Auto-generated method stub
 		return moviesList;
 	}
-	
+
 	@Override
 	public List<Movie> getMovieByGenre(String genre) throws MovieNotFoundException {
 		// TODO Auto-generated method stub
@@ -133,16 +131,17 @@ public class MovieRepositoryImpl implements IMovieRepository {
 			String query = Queries.GETMOVIEBYGENREQUERY;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, genre);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
 				Movie movie = new Movie();
-				movie.setMovieTitle(rs.getString("movieTitle"));
-				movie.setReleasedYear(rs.getInt("releasedYear"));
-				movie.setGenre(rs.getString("genre"));
-				movie.setLanguage(rs.getString("language"));
+				movie.setMovieTitle(resultSet.getString("movieTitle"));
+				movie.setReleasedYear(resultSet.getInt("releasedYear"));
+				movie.setGenre(resultSet.getString("genre"));
+				movie.setLanguage(resultSet.getString("language"));
+				movie.setMovieId(resultSet.getInt("movieId"));
 				moviesList.add(movie);
 			}
-			if(moviesList.isEmpty()) {
+			if (moviesList.isEmpty()) {
 				throw new MovieNotFoundException("Genre not available");
 			}
 		} catch (SQLException e) {
@@ -171,16 +170,17 @@ public class MovieRepositoryImpl implements IMovieRepository {
 			String query = Queries.GETMOVIEBYYEARQUERY;
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, releasedYear);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
 				Movie movie = new Movie();
-				movie.setMovieTitle(rs.getString("movieTitle"));
-				movie.setReleasedYear(rs.getInt("releasedYear"));
-				movie.setGenre(rs.getString("genre"));
-				movie.setLanguage(rs.getString("language"));
+				movie.setMovieTitle(resultSet.getString("movieTitle"));
+				movie.setReleasedYear(resultSet.getInt("releasedYear"));
+				movie.setGenre(resultSet.getString("genre"));
+				movie.setLanguage(resultSet.getString("language"));
+				movie.setMovieId(resultSet.getInt("movieId"));
 				moviesList.add(movie);
 			}
-			if(moviesList.isEmpty()) {
+			if (moviesList.isEmpty()) {
 				throw new MovieNotFoundException("No movie released in that year");
 			}
 		} catch (SQLException e) {
@@ -195,7 +195,7 @@ public class MovieRepositoryImpl implements IMovieRepository {
 				System.out.println(e.getMessage());
 			}
 		}
-		
+
 		// TODO Auto-generated method stub
 		return moviesList;
 	}
@@ -212,11 +212,11 @@ public class MovieRepositoryImpl implements IMovieRepository {
 			ResultSet resultSet = prepareStatement.executeQuery();
 			while (resultSet.next()) {
 				Movie movie = new Movie();
-				
+
 				movie.setMovieTitle(resultSet.getString("movieTitle"));
 				movie.setReleasedYear(resultSet.getInt("releasedYear"));
 				movie.setGenre(resultSet.getString("genre"));
-				
+
 				movie.setLanguage(resultSet.getString("language"));
 				movie.setMovieId(resultSet.getInt("movieId"));
 				moviesList.add(movie);

@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.moviebuzz.exception.MovieNotFoundException;
 import com.moviebuzz.exception.UserNotFoundException;
-import com.moviebuzz.model.Movie;
+
 import com.moviebuzz.model.Review;
 
 public class ReviewRepositoryImpl implements IReviewRepository {
@@ -17,7 +17,7 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 	Connection connection;
 
 	@Override
-	public void addReview(Review review) {
+	public void addReview(Review review)  {
 		// TODO Auto-generated method stub
 		Connection connection;
 		connection = ModelDao.openConnection();
@@ -31,7 +31,8 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 			statement.setString(4, review.getNegatives());
 			statement.setInt(5, review.getOverallRating());
 			statement.setString(6, review.getUniqueId());
-			statement.execute();
+			statement.executeUpdate();
+			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -82,13 +83,14 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 			preparedStatement = connection.prepareStatement(Queries.GETUSERREVIEWQUERY);
 			preparedStatement.setString(1, uniqueId);
 			preparedStatement.setString(2, movieName);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
 				Review review = new Review();
-				review.setReview(rs.getString("review"));
-				review.setPositives(rs.getString("positive"));
-				review.setNegatives(rs.getString("negative"));
-				review.setOverallRating(rs.getInt("overallRating"));
+				review.setMovieId(resultSet.getInt("movieId"));
+				review.setReview(resultSet.getString("review"));
+				review.setPositives(resultSet.getString("positive"));
+				review.setNegatives(resultSet.getString("negative"));
+				review.setOverallRating(resultSet.getInt("overallRating"));
 				reviewList.add(review);
 			}
 			if (reviewList.isEmpty()) {
@@ -119,17 +121,17 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 		List<Review> reviewList = new ArrayList<>();
 
 		try {
-			
+
 			preparedStatement = connection.prepareStatement(Queries.GETREVIEWFORMOVIEQUERY);
 			preparedStatement.setString(1, movieName);
 			preparedStatement.setString(2, language);
-			ResultSet rs = preparedStatement.executeQuery();
-			while (rs.next()) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
 				Review review = new Review();
-				review.setReview(rs.getString("review"));
-				review.setPositives(rs.getString("positive"));
-				review.setNegatives(rs.getString("negative"));
-				review.setOverallRating(rs.getInt("overallRating"));
+				review.setReview(resultSet.getString("review"));
+				review.setPositives(resultSet.getString("positive"));
+				review.setNegatives(resultSet.getString("negative"));
+				review.setOverallRating(resultSet.getInt("overallRating"));
 				reviewList.add(review);
 			}
 			if (reviewList.isEmpty()) {
@@ -180,6 +182,48 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 			}
 		}
 
+	}
+
+	@Override
+	public List<Review> getOtherUserResponses(String uniqueId) throws MovieNotFoundException {
+		// TODO Auto-generated method stub
+		connection = ModelDao.openConnection();
+		PreparedStatement preparedStatement = null;
+		List<Review> reviewList = new ArrayList<>();
+
+		try {
+
+			preparedStatement = connection.prepareStatement(Queries.GETOTHERREVIEWRESPONSESQUERY);
+			preparedStatement.setString(1, uniqueId);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Review review = new Review();
+				review.setMovieId(resultSet.getInt("movieId"));
+				review.setReview(resultSet.getString("review"));
+				review.setPositives(resultSet.getString("positive"));
+				review.setNegatives(resultSet.getString("negative"));
+				review.setOverallRating(resultSet.getInt("overallRating"));
+				reviewList.add(review);
+			}
+			if (reviewList.isEmpty()) {
+				throw new MovieNotFoundException("No other responses for this movie");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		// TODO Auto-generated method stub
+		return reviewList;
 	}
 
 }

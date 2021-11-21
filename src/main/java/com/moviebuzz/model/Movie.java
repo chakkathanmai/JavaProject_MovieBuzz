@@ -158,7 +158,7 @@ public class Movie {
 
 	@Override
 	public String toString() {
-		return "Movie --" + movieTitle + "\n" + "   Genre=" + genre + "   Language=" + language + "   Year of release="
+		return "Movie --" + movieTitle+ "--" + "\n\n" + "   Genre=" + genre + "   Language=" + language + "   Year of release="
 				+ releasedYear + "   Movie Id=" + movieId + "\n";
 	}
 

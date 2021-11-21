@@ -128,8 +128,8 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review -- [ review=" + review + ", positives=" + positives + ", negatives=" + negatives
-				+ ", overallRating=" + overallRating + "]";
+		return "Review -- [ movieId="+movieId+"   review=" + review + "   positives=" + positives + "   negatives=" + negatives
+				+ "   overallRating=" + overallRating + "]\n";
 	}
 
 }

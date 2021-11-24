@@ -34,7 +34,7 @@ public class Client {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println();
-		System.out.println("------MOVIE REVIEW SYSTEM------");
+		System.out.println("------MOVIE BUZZ------");
 		System.out.println();
 		System.out.println(
 				"We welcome you our MRS where you can write the review of any movie. You can share your views on the movie"

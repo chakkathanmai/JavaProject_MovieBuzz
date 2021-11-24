@@ -21,7 +21,7 @@ public interface IReviewService {
 	 * @throws UserNotFoundException
 	 */
 
-	void updateReview(Review review) throws UserNotFoundException;
+	public boolean updateReview(Review review) throws UserNotFoundException;
 
 	/**
 	 * 

@@ -15,7 +15,7 @@ import com.moviebuzz.model.Review;
  */
 public interface IReviewRepository {
 	/**
-	 * ss
+	 * 
 	 * 
 	 * @param review
 	 */
@@ -27,7 +27,7 @@ public interface IReviewRepository {
 	 * @throws UserNotFoundException
 	 */
 
-	void updateReview(Review review) throws UserNotFoundException;
+	public boolean updateReview(Review review) throws UserNotFoundException;
 
 	/**
 	 * 

@@ -45,9 +45,6 @@ public class MovieRepositoryImpl implements IMovieRepository {
 		}
 	}
 
-	/**
-	 * 
-	 */
 
 	@Override
 	public void deleteMovie(Movie movie) throws MovieNotFoundException {

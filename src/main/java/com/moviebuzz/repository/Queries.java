@@ -8,9 +8,9 @@ package com.moviebuzz.repository;
  *
  */
 public class Queries {
-	
+
 	/**
-	 * Queries for all the methods
+	 * Queries
 	 */
 	public static final String ADDMOVIEQUERY = "insert into movie(movieTitle,releasedYear,genre,budget,collection,language) values(?,?,?,?,?,?)";
 	public static final String GETMOVIEBYLANGUAGEQUERY = "select movieTitle,language,releasedYear,genre,movieId from movie where language= ?";

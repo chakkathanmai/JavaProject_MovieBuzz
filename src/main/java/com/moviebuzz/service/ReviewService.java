@@ -20,9 +20,10 @@ public class ReviewService implements IReviewService {
 	}
 
 	@Override
-	public void updateReview(Review review) throws UserNotFoundException {
+	public boolean updateReview(Review review) throws UserNotFoundException {
 		// TODO Auto-generated method stub
 		reviewRepository.updateReview(review);
+		return false;
 	}
 
 	@Override

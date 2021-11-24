@@ -39,7 +39,7 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 	}
 
 	@Override
-	public void updateReview(Review update) throws UserNotFoundException {
+	public boolean updateReview(Review update) throws UserNotFoundException {
 		// TODO Auto-generated method stub
 		PreparedStatement statement = null;
 		try {
@@ -69,6 +69,7 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 				ModelDao.closeConnection();
 			}
 		}
+		return false;
 	}
 
 	@Override

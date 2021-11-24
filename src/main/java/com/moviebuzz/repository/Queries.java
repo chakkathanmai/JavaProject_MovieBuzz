@@ -23,7 +23,7 @@ public class Queries {
 	public static final String ADDREVIEWQUERY = "insert into review values(?,?,?,?,?,?)";
 	public static final String UPDATEREVIEWQUERY = "update review set review = ?,positive=?,negative=?,overallRating=?  where movieId=? and uniqueId=?";
 	public static final String GETUSERREVIEWQUERY = "select movieId,review,positive,negative,overallRating from review where uniqueId= ? and movieId= (select movieId from movie where movieTitle=?)";
-	public static final String GETREVIEWFORMOVIEQUERY = "select review,positive,negative,overallRating from review where movieId= (select movieId from movie where movieTitle=? and language=?)";
+	public static final String GETREVIEWFORMOVIEQUERY = "select movieId, review,positive,negative,overallRating from review where movieId= (select movieId from movie where movieTitle=? and language=?)";
 	public static final String DELETEREVIEWQUERY = "delete from review where uniqueId = ? and movieId = (select movieId from movie where movieTitle=?)";
 	public static final String DELETEUSERQUERY = "delete from user_details where uniqueId=(select uniqueId from review where review like '%kill%' or positive like '%kill%' or negative like '%kill%')";
 	public static final String DELETEREVIEWBYADMINQUERY = "delete from review where review like '%kill%' or positive like '%kill%' or negative like '%kill%' ";

@@ -129,6 +129,7 @@ public class ReviewRepositoryImpl implements IReviewRepository {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Review review = new Review();
+				review.setReview(resultSet.getString("movieId"));
 				review.setReview(resultSet.getString("review"));
 				review.setPositives(resultSet.getString("positive"));
 				review.setNegatives(resultSet.getString("negative"));
